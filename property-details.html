@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details | RentConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="properties.css">
+  <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+
+<nav class="navbar scrolled" id="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🏠</div>
+      <span class="logo-text" style="color:var(--text)">RentConnect</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="properties.html" class="nav-link active">Properties</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <button class="theme-toggle" style="color:var(--text)">🌙</button>
+      <a href="login.html" class="nav-link" style="color:var(--text-muted)">Login</a>
+      <a href="register.html" class="btn btn-coral btn-sm">List Property</a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="properties.html" class="nav-link">Properties</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <div class="mobile-nav-cta">
+    <a href="login.html" class="btn btn-outline">Login</a>
+    <a href="register.html" class="btn btn-coral">List Property</a>
+  </div>
+</div>
+
+<!-- Breadcrumb -->
+<div style="background:var(--card-bg);border-bottom:1px solid var(--border);padding-top:var(--nav-h)">
+  <div class="container" style="padding-top:16px;padding-bottom:16px">
+    <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--text-muted)">
+      <a href="index.html" style="color:var(--indigo-mid)">Home</a>
+      <span>›</span>
+      <a href="properties.html" style="color:var(--indigo-mid)">Properties</a>
+      <span>›</span>
+      <span id="breadcrumb-title">Property Details</span>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="padding-bottom:80px">
+  <div class="detail-layout">
+
+    <!-- Main content -->
+    <div class="detail-main" id="detail-main">
+      <!-- Skeleton loading -->
+      <div id="detail-skeleton">
+        <div class="skeleton" style="height:480px;border-radius:20px;margin-bottom:24px"></div>
+        <div class="skeleton" style="height:28px;width:60%;margin-bottom:12px"></div>
+        <div class="skeleton" style="height:20px;width:40%;margin-bottom:32px"></div>
+        <div class="skeleton" style="height:120px;margin-bottom:24px"></div>
+      </div>
+    </div>
+
+    <!-- Booking sidebar -->
+    <aside>
+      <div class="booking-card" id="booking-card" style="display:none">
+        <div class="booking-price">
+          <span class="booking-amount" id="booking-amount">UGX 0</span>
+          <span class="booking-per">/month</span>
+        </div>
+        <div class="booking-form">
+          <div class="form-group">
+            <label class="form-label">Move-in Date</label>
+            <input type="date" class="form-input" id="move-in-date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Duration</label>
+            <select class="form-input">
+              <option>1 month</option>
+              <option>3 months</option>
+              <option selected>6 months</option>
+              <option>1 year</option>
+              <option>2 years</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+256 700 000 000">
+          </div>
+          <button class="booking-cta" onclick="handleBookingRequest()">
+            📞 Request Viewing
+          </button>
+          <p class="booking-note">Free to contact · No commission charged</p>
+        </div>
+
+        <div class="landlord-card" id="landlord-card"></div>
+
+        <div style="display:flex;gap:8px;margin-top:16px">
+          <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" onclick="handleFavouriteDetail()">
+            🤍 Save
+          </button>
+          <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" onclick="handleShare()">
+            📤 Share
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Similar Properties -->
+  <div style="margin-top:80px">
+    <h2 class="display-md" style="margin-bottom:40px">Similar Properties</h2>
+    <div class="similar-grid stagger-group" id="similar-grid"></div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+<div id="toast-container"></div>
+
+<script src="data/properties.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script>
+let currentProp = null;
+let currentImageIdx = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('footer-placeholder').innerHTML = buildFooter();
+
+  const id = parseInt(new URLSearchParams(window.location.search).get('id'));
+  const prop = PROPERTIES.find(p => p.id === id);
+
+  if (!prop) {
+    document.getElementById('detail-main').innerHTML = `
+      <div class="no-results" style="padding:80px 0">
+        <div class="no-results-icon">🏚️</div>
+        <h3>Property Not Found</h3>
+        <p>The property you're looking for may have been removed or doesn't exist.</p>
+        <a href="properties.html" class="btn btn-primary" style="margin-top:20px">← Back to Listings</a>
+      </div>`;
+    return;
+  }
+
+  currentProp = prop;
+  document.title = `${prop.title} | RentConnect`;
+  document.getElementById('breadcrumb-title').textContent = prop.title;
+
+  renderDetail(prop);
+  renderSimilar(prop);
+
+  // Set min date to today
+  const dateInput = document.getElementById('move-in-date');
+  if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+});
+
+function renderDetail(prop) {
+  const fav = isFavorite(prop.id);
+
+  document.getElementById('detail-skeleton').remove();
+
+  document.getElementById('detail-main').innerHTML = `
+    <!-- Gallery -->
+    <div class="detail-gallery">
+      <div class="gallery-main" id="gallery-main">
+        <img src="${prop.images[0]}" alt="${prop.title}" id="gallery-main-img">
+        <div class="gallery-nav">
+          <button class="gallery-nav-btn" onclick="changeImage(-1)">‹</button>
+          <button class="gallery-nav-btn" onclick="changeImage(1)">›</button>
+        </div>
+      </div>
+      <div class="gallery-thumbs">
+        ${prop.images.map((img, i) => `
+          <div class="gallery-thumb ${i === 0 ? 'active' : ''}" onclick="setImage(${i})" id="thumb-${i}">
+            <img src="${img}" alt="Photo ${i+1}" loading="lazy">
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="detail-badges reveal">
+      <span class="badge badge-indigo">${prop.type}</span>
+      <span class="badge ${prop.available ? 'badge-teal' : 'badge-coral'}">
+        ${prop.available ? '● Available' : '● Currently Rented'}
+      </span>
+      ${prop.featured ? '<span class="badge badge-coral">⭐ Featured</span>' : ''}
+    </div>
+
+    <!-- Title -->
+    <h1 class="detail-title reveal">${prop.title}</h1>
+    <div class="detail-location reveal">
+      📍 ${prop.location}
+      <button class="btn btn-sm" style="margin-left:auto;background:none;color:var(--indigo-mid);font-weight:600"
+        onclick="window.open('https://maps.google.com?q=${encodeURIComponent(prop.location)}','_blank')">
+        View on Map ↗
+      </button>
+    </div>
+
+    <!-- Meta -->
+    <div class="detail-meta reveal">
+      <div class="detail-meta-item">
+        <div class="meta-icon">🛏</div>
+        <div class="meta-val">${prop.bedrooms === 0 ? 'Studio' : prop.bedrooms}</div>
+        <div class="meta-lbl">Bedrooms</div>
+      </div>
+      <div class="detail-meta-item">
+        <div class="meta-icon">🚿</div>
+        <div class="meta-val">${prop.bathrooms}</div>
+        <div class="meta-lbl">Bathrooms</div>
+      </div>
+      <div class="detail-meta-item">
+        <div class="meta-icon">📐</div>
+        <div class="meta-val">${prop.area}m²</div>
+        <div class="meta-lbl">Floor Area</div>
+      </div>
+      <div class="detail-meta-item">
+        <div class="meta-icon">📅</div>
+        <div class="meta-val">${new Date(prop.dateAdded).toLocaleDateString('en-UG', {month:'short',year:'numeric'})}</div>
+        <div class="meta-lbl">Listed</div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="reveal">
+      <div class="detail-section-title">About This Property</div>
+      <p class="detail-description">${prop.description}</p>
+    </div>
+
+    <!-- Amenities -->
+    <div class="reveal">
+      <div class="detail-section-title">Amenities & Features</div>
+      <div class="amenities-wrap">
+        ${prop.amenities.map(a => `<span class="amenity-chip">✓ ${a}</span>`).join('')}
+      </div>
+    </div>
+  `;
+
+  // Booking card
+  document.getElementById('booking-card').style.display = 'block';
+  document.getElementById('booking-amount').textContent = formatPrice(prop.price, prop.currency);
+
+  // Landlord card
+  const initials = prop.landlord.name.split(' ').map(n => n[0]).join('');
+  document.getElementById('landlord-card').innerHTML = `
+    <div class="landlord-avatar">${initials}</div>
+    <div>
+      <div class="landlord-name">${prop.landlord.name}</div>
+      <div class="landlord-rating">
+        <span class="stars">⭐</span>
+        ${prop.landlord.rating} · ${prop.landlord.reviews} reviews
+      </div>
+      <a href="tel:${prop.landlord.phone}" style="font-size:0.8rem;color:var(--indigo-mid);font-weight:600;margin-top:4px;display:block">
+        📞 ${prop.landlord.phone}
+      </a>
+    </div>
+  `;
+
+  setTimeout(initScrollReveal, 100);
+}
+
+function renderSimilar(prop) {
+  const similar = PROPERTIES
+    .filter(p => p.id !== prop.id && (p.type === prop.type || p.city === prop.city))
+    .slice(0, 3);
+  const grid = document.getElementById('similar-grid');
+  if (grid && similar.length) {
+    grid.innerHTML = similar.map(p => buildPropertyCard(p)).join('');
+    setTimeout(() => grid.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')), 100);
+  } else if (grid) {
+    grid.innerHTML = PROPERTIES.filter(p => p.id !== prop.id).slice(0, 3).map(p => buildPropertyCard(p)).join('');
+  }
+}
+
+function setImage(idx) {
+  currentImageIdx = idx;
+  const mainImg = document.getElementById('gallery-main-img');
+  if (!mainImg || !currentProp) return;
+  mainImg.style.opacity = '0';
+  setTimeout(() => { mainImg.src = currentProp.images[idx]; mainImg.style.opacity = '1'; }, 150);
+  document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === idx));
+}
+
+function changeImage(dir) {
+  if (!currentProp) return;
+  const next = (currentImageIdx + dir + currentProp.images.length) % currentProp.images.length;
+  setImage(next);
+}
+
+function handleBookingRequest() {
+  const user = getUser();
+  if (!user) {
+    showToast('Please login to request a viewing', 'warning');
+    setTimeout(() => window.location.href = `login.html?redirect=property-details.html?id=${currentProp?.id}`, 1200);
+    return;
+  }
+  showToast('Viewing request sent to landlord! They\'ll contact you shortly. 📞', 'success', 6000);
+}
+
+function handleFavouriteDetail() {
+  if (!currentProp) return;
+  const isFav = toggleFavorite(currentProp.id);
+  const btn = event.currentTarget;
+  btn.innerHTML = isFav ? '❤️ Saved' : '🤍 Save';
+}
+
+function handleShare() {
+  if (navigator.share) {
+    navigator.share({ title: currentProp?.title, url: window.location.href });
+  } else {
+    navigator.clipboard?.writeText(window.location.href);
+    showToast('Link copied to clipboard! 📋', 'success');
+  }
+}
+</script>
+</body>
+</html>

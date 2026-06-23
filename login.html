@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | RentConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+
+<div id="page-loader">
+  <div class="loader-logo">🏠 RentConnect</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<div class="auth-page">
+
+  <!-- ── Left Visual Panel ── -->
+  <div class="auth-visual">
+    <div class="auth-visual-blob auth-visual-blob-1"></div>
+    <div class="auth-visual-blob auth-visual-blob-2"></div>
+
+    <div class="auth-visual-content">
+      <div class="auth-visual-logo">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🏠</div>
+          <span class="logo-text">RentConnect</span>
+        </a>
+      </div>
+
+      <h2>Uganda's #1 Rental Marketplace</h2>
+      <p>Connect with verified landlords and find your perfect home — all in one place, completely free.</p>
+
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon">✅</div>
+          <div class="auth-feature-text">
+            <strong>Verified Listings</strong>
+            <span>Every property is manually reviewed for accuracy</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">💬</div>
+          <div class="auth-feature-text">
+            <strong>Direct Contact</strong>
+            <span>Talk to landlords directly — no middlemen</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">🔒</div>
+          <div class="auth-feature-text">
+            <strong>Secure & Private</strong>
+            <span>Your data is encrypted and never sold</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">🚀</div>
+          <div class="auth-feature-text">
+            <strong>Free Forever</strong>
+            <span>No subscription fees for renters</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-testimonial">
+      <p class="quote">"I found my Kololo apartment in less than 3 days. The landlord was verified and the process was incredibly smooth."</p>
+      <div class="author">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Brian">
+        <div>
+          <div class="author-name">Brian Ssebulime</div>
+          <div class="author-role">Renter · Kololo, Kampala</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right Form Panel ── -->
+  <div class="auth-form-panel">
+    <div class="auth-form-inner">
+
+      <div class="auth-form-header">
+        <h1>Welcome back 👋</h1>
+        <p>Don't have an account? <a href="register.html">Sign up free →</a></p>
+      </div>
+
+      <form class="auth-form" id="login-form" novalidate>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <div class="input-group">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="email" name="email" class="form-input"
+              placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <span class="form-error" id="email-error"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-group" style="position:relative">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="password" name="password" class="form-input"
+              placeholder="Your password" autocomplete="current-password" required style="padding-right:48px">
+            <button type="button" class="password-toggle" title="Show/hide password">👁️</button>
+          </div>
+          <span class="form-error" id="password-error"></span>
+        </div>
+
+        <!-- Options -->
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" name="remember"> Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="auth-submit btn">
+          🔑 Sign In to RentConnect
+        </button>
+
+        <!-- Divider -->
+        <div class="auth-divider">or continue with</div>
+
+        <!-- Social -->
+        <div class="social-btns">
+          <button type="button" class="social-btn" onclick="socialLogin('Google')">
+            <span>🌐</span> Google
+          </button>
+          <button type="button" class="social-btn" onclick="socialLogin('Facebook')">
+            <span>📘</span> Facebook
+          </button>
+        </div>
+
+        <p class="auth-terms">
+          By signing in you agree to our
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </p>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="properties.js"></script>
+<script src="main.js"></script>
+<script src="auth.js"></script>
+<script>
+function socialLogin(provider) {
+  showToast(`${provider} login coming soon!`, 'info');
+}
+// Redirect if already logged in
+document.addEventListener('DOMContentLoaded', () => {
+  if (getUser()) window.location.href = 'dashboard.html';
+});
+</script>
+</body>
+</html>

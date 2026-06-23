@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RentConnect — Uganda's premier rental marketplace. Find apartments, houses, and commercial spaces across Kampala and beyond.">
+  <title>RentConnect | Find Your Perfect Rental in Uganda</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-logo">🏠 RentConnect</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🏠</div>
+      <span class="logo-text">RentConnect</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="properties.html" class="nav-link">Properties</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+      <a href="login.html" class="nav-link">Login</a>
+      <a href="register.html" class="btn btn-coral btn-sm">List Property</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html" class="nav-link active">Home</a>
+  <a href="properties.html" class="nav-link">Properties</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <div class="mobile-nav-cta">
+    <a href="login.html" class="btn btn-outline">Login</a>
+    <a href="register.html" class="btn btn-coral">List Property</a>
+  </div>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-blob hero-blob-3"></div>
+
+  <div class="hero-visual">
+    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80" alt="Modern homes">
+    <div class="hero-visual-card">
+      <div class="card-label">Latest listing</div>
+      <div class="card-value">Kololo Penthouse</div>
+      <div style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:4px">UGX 6,000,000/mo</div>
+    </div>
+  </div>
+
+  <div class="container hero-content">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      Uganda's #1 Rental Marketplace
+    </div>
+
+    <h1 class="display-xl hero-animate-1">
+      Find Your Dream<br>
+      Home <span class="gradient-text" id="typewriter"
+        data-texts='["in Kampala", "in Kololo", "in Nakasero", "near you"]'>in Kampala</span>
+    </h1>
+
+    <p class="hero-sub hero-animate-2">
+      Discover verified rental properties across Uganda. Connect directly with trusted landlords — no agents, no hidden fees.
+    </p>
+
+    <div class="hero-btns hero-animate-3">
+      <a href="properties.html" class="btn btn-coral btn-xl">Browse Properties</a>
+      <a href="register.html" class="btn btn-ghost btn-xl">List Your Property</a>
+    </div>
+
+    <div class="hero-stats hero-animate-4">
+      <div class="hero-stat-item">
+        <div class="stat-number counter" data-counter="1240" data-suffix="+">0</div>
+        <div class="stat-label">Properties Listed</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="stat-number counter" data-counter="380" data-suffix="+">0</div>
+        <div class="stat-label">Verified Landlords</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="stat-number counter" data-counter="5600" data-suffix="+">0</div>
+        <div class="stat-label">Happy Renters</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="stat-number counter" data-counter="12">0</div>
+        <div class="stat-label">Cities Covered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SEARCH BOX ═══════════════ -->
+<section class="search-section section-sm">
+  <div class="container">
+    <div class="search-box">
+      <div class="search-tabs">
+        <button class="search-tab active">🏠 Rent</button>
+        <button class="search-tab">🏢 Buy</button>
+        <button class="search-tab">🏬 Commercial</button>
+      </div>
+      <form id="hero-search-form">
+        <div class="search-fields">
+          <div class="search-field">
+            <label>Location</label>
+            <div class="field-input">
+              <span class="icon">📍</span>
+              <input type="text" id="search-location" placeholder="City, neighbourhood, or area…">
+            </div>
+          </div>
+          <div class="search-field">
+            <label>Property Type</label>
+            <div class="field-input">
+              <span class="icon">🏠</span>
+              <select id="search-type">
+                <option value="">Any type</option>
+                <option value="Apartment">Apartment</option>
+                <option value="House">House</option>
+                <option value="Studio">Studio</option>
+                <option value="Villa">Villa</option>
+                <option value="Penthouse">Penthouse</option>
+                <option value="Office">Office</option>
+              </select>
+            </div>
+          </div>
+          <div class="search-field">
+            <label>Max Price (UGX/mo)</label>
+            <div class="field-input">
+              <span class="icon">💰</span>
+              <select id="search-price">
+                <option value="">Any price</option>
+                <option value="500000">500,000</option>
+                <option value="1000000">1,000,000</option>
+                <option value="2000000">2,000,000</option>
+                <option value="3000000">3,000,000</option>
+                <option value="5000000">5,000,000+</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="search-btn">
+            🔍 Search
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FEATURED PROPERTIES ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">✨ Hand-picked for you</span>
+      <h2 class="display-md">Featured Properties</h2>
+      <p>Explore our selection of premium verified rentals across Uganda's finest neighbourhoods.</p>
+    </div>
+
+    <div class="grid-3 stagger-group" id="featured-grid">
+      <!-- Rendered by JS -->
+    </div>
+
+    <div style="text-align:center;margin-top:48px">
+      <a href="properties.html" class="btn btn-primary btn-lg">View All Properties →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ POPULAR LOCATIONS ═══════════════ -->
+<section class="section" style="background:var(--card-bg)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">📍 Explore Uganda</span>
+      <h2 class="display-md">Popular Locations</h2>
+      <p>Thriving communities and vibrant neighbourhoods with hundreds of available rentals.</p>
+    </div>
+    <div class="locations-grid stagger-group">
+      <div class="location-card reveal" onclick="window.location='properties.html?q=Kololo'">
+        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80" alt="Kololo" loading="lazy">
+        <div class="location-card-overlay">
+          <div class="location-name">Kololo</div>
+          <div class="location-count">34 properties</div>
+        </div>
+      </div>
+      <div class="location-card reveal reveal-delay-1" onclick="window.location='properties.html?q=Nakasero'">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80" alt="Nakasero" loading="lazy">
+        <div class="location-card-overlay">
+          <div class="location-name">Nakasero</div>
+          <div class="location-count">28 properties</div>
+        </div>
+      </div>
+      <div class="location-card reveal reveal-delay-2" onclick="window.location='properties.html?q=Muyenga'">
+        <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?w=600&q=80" alt="Muyenga" loading="lazy">
+        <div class="location-card-overlay">
+          <div class="location-name">Muyenga</div>
+          <div class="location-count">19 properties</div>
+        </div>
+      </div>
+      <div class="location-card reveal reveal-delay-3" onclick="window.location='properties.html?q=Ntinda'">
+        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80" alt="Ntinda" loading="lazy">
+        <div class="location-card-overlay">
+          <div class="location-name">Ntinda</div>
+          <div class="location-count">47 properties</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ═══════════════ -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid stagger-group">
+      <div class="stat-card reveal">
+        <div class="stat-number counter" data-counter="1240" data-suffix="+">0</div>
+        <div class="stat-label">Properties Listed</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-number counter" data-counter="12">0</div>
+        <div class="stat-label">Cities Covered</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-number counter" data-counter="380" data-suffix="+">0</div>
+        <div class="stat-label">Verified Landlords</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-number counter" data-counter="5600" data-suffix="+">0</div>
+        <div class="stat-label">Happy Renters</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">🚀 Simple & Fast</span>
+      <h2 class="display-md">How RentConnect Works</h2>
+      <p>From listing to lease in just three easy steps.</p>
+    </div>
+    <div class="grid-3 stagger-group">
+      <div class="card reveal" style="padding:40px 32px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:16px">🔍</div>
+        <h3 style="font-family:var(--font-display);margin-bottom:12px">Search</h3>
+        <p style="color:var(--text-muted);line-height:1.7">Browse thousands of verified listings. Filter by location, price, type, and amenities to find your perfect match.</p>
+      </div>
+      <div class="card reveal reveal-delay-1" style="padding:40px 32px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:16px">📞</div>
+        <h3 style="font-family:var(--font-display);margin-bottom:12px">Connect</h3>
+        <p style="color:var(--text-muted);line-height:1.7">Contact verified landlords directly. Schedule viewings and ask questions — no middlemen, no commission fees.</p>
+      </div>
+      <div class="card reveal reveal-delay-2" style="padding:40px 32px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:16px">🔑</div>
+        <h3 style="font-family:var(--font-display);margin-bottom:12px">Move In</h3>
+        <p style="color:var(--text-muted);line-height:1.7">Agree terms, sign your lease, and get your keys. RentConnect makes the entire journey smooth and transparent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="section" style="background:var(--card-bg)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">💬 Real Stories</span>
+      <h2 class="display-md">What Our Users Say</h2>
+      <p>Join thousands of Ugandans who found their home through RentConnect.</p>
+    </div>
+    <div class="testimonials-grid stagger-group" id="testimonials-grid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="cta-section reveal">
+      <h2 class="display-md">Ready to Find Your Home?</h2>
+      <p>Join over 5,600 renters and 380 landlords already using RentConnect.</p>
+      <div class="cta-btns">
+        <a href="properties.html" class="btn btn-coral btn-xl">Browse Properties</a>
+        <a href="register.html" class="btn btn-ghost btn-xl">Become a Landlord</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<script src="properties.js"></script>
+<script src="main.js"></script>
+<script src="search.js"></script>
+<script src="animations.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Render featured properties
+  const grid = document.getElementById('featured-grid');
+  if (grid) {
+    const featured = PROPERTIES.filter(p => p.featured).slice(0, 6);
+    grid.innerHTML = featured.map(p => buildPropertyCard(p)).join('');
+  }
+
+  // Render testimonials
+  const tGrid = document.getElementById('testimonials-grid');
+  if (tGrid) {
+    tGrid.innerHTML = TESTIMONIALS.map(t => `
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars stars">${'⭐'.repeat(t.rating)}</div>
+        <p class="testimonial-text">${t.text}</p>
+        <div class="testimonial-author">
+          <img src="${t.avatar}" alt="${t.name}" loading="lazy">
+          <div>
+            <div class="author-name">${t.name}</div>
+            <div class="author-role">${t.role}</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Footer
+  document.getElementById('footer-placeholder').innerHTML = buildFooter();
+
+  // Re-run scroll reveal after dynamic content
+  setTimeout(initScrollReveal, 100);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | RentConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+
+<div id="page-loader">
+  <div class="loader-logo">🏠 RentConnect</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<div class="auth-page">
+
+  <!-- ── Left Visual Panel ── -->
+  <div class="auth-visual">
+    <div class="auth-visual-blob auth-visual-blob-1"></div>
+    <div class="auth-visual-blob auth-visual-blob-2"></div>
+
+    <div class="auth-visual-content">
+      <div class="auth-visual-logo">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🏠</div>
+          <span class="logo-text">RentConnect</span>
+        </a>
+      </div>
+
+      <h2>Join 5,600+ Ugandans Finding Homes</h2>
+      <p>Whether you're a renter searching for the perfect home or a landlord growing your portfolio, RentConnect is built for you.</p>
+
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon">🏠</div>
+          <div class="auth-feature-text">
+            <strong>For Landlords</strong>
+            <span>List unlimited properties and reach thousands of renters</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">🔑</div>
+          <div class="auth-feature-text">
+            <strong>For Renters</strong>
+            <span>Browse verified listings and contact landlords directly</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">📊</div>
+          <div class="auth-feature-text">
+            <strong>Smart Dashboard</strong>
+            <span>Manage everything from one powerful interface</span>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">🎁</div>
+          <div class="auth-feature-text">
+            <strong>Free to Start</strong>
+            <span>No credit card required — set up in under 2 minutes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-testimonial">
+      <p class="quote">"I listed my three properties and had tenants within days. The dashboard makes managing everything effortless."</p>
+      <div class="author">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Olivia">
+        <div>
+          <div class="author-name">Olivia Namukasa</div>
+          <div class="author-role">Landlord · Ntinda, Kampala</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right Form Panel ── -->
+  <div class="auth-form-panel">
+    <div class="auth-form-inner">
+
+      <div class="auth-form-header">
+        <h1>Create your account ✨</h1>
+        <p>Already have an account? <a href="login.html">Sign in →</a></p>
+      </div>
+
+      <!-- Account type selector -->
+      <div class="account-tabs">
+        <div class="account-tab active" data-role="renter">
+          <div class="tab-icon">🔑</div>
+          <div class="tab-title">I'm a Renter</div>
+          <div class="tab-desc">Looking for a property</div>
+        </div>
+        <div class="account-tab" data-role="landlord">
+          <div class="tab-icon">🏠</div>
+          <div class="tab-title">I'm a Landlord</div>
+          <div class="tab-desc">I have property to rent</div>
+        </div>
+      </div>
+
+      <form class="auth-form" id="register-form" novalidate>
+
+        <!-- Name row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="first-name">First Name</label>
+            <div class="input-group">
+              <span class="input-icon">👤</span>
+              <input type="text" id="first-name" name="first-name" class="form-input"
+                placeholder="John" autocomplete="given-name" required>
+            </div>
+            <span class="form-error" id="first-name-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="last-name">Last Name</label>
+            <div class="input-group">
+              <span class="input-icon">👤</span>
+              <input type="text" id="last-name" name="last-name" class="form-input"
+                placeholder="Doe" autocomplete="family-name" required>
+            </div>
+            <span class="form-error" id="last-name-error"></span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="reg-email">Email Address</label>
+          <div class="input-group">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="reg-email" name="reg-email" class="form-input"
+              placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <span class="form-error" id="reg-email-error"></span>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label class="form-label" for="reg-phone">Phone Number</label>
+          <div class="input-group">
+            <span class="input-icon">📞</span>
+            <input type="tel" id="reg-phone" name="reg-phone" class="form-input"
+              placeholder="+256 700 000 000" autocomplete="tel" required>
+          </div>
+          <span class="form-error" id="reg-phone-error"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Password</label>
+          <div class="input-group" style="position:relative">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-password" name="reg-password" class="form-input"
+              placeholder="Min. 8 characters" autocomplete="new-password" required style="padding-right:48px">
+            <button type="button" class="password-toggle" data-for="reg-password">👁️</button>
+          </div>
+          <div class="password-strength">
+            <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+            <span class="strength-text" id="strength-text"></span>
+          </div>
+          <span class="form-error" id="reg-password-error"></span>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label class="form-label" for="reg-confirm">Confirm Password</label>
+          <div class="input-group" style="position:relative">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-confirm" name="reg-confirm" class="form-input"
+              placeholder="Repeat your password" autocomplete="new-password" required style="padding-right:48px">
+            <button type="button" class="password-toggle" data-for="reg-confirm">👁️</button>
+          </div>
+          <span class="form-error" id="reg-confirm-error"></span>
+        </div>
+
+        <!-- Terms -->
+        <div class="form-group">
+          <label class="remember-me" style="align-items:flex-start;gap:10px">
+            <input type="checkbox" name="terms" id="terms" style="margin-top:3px">
+            <span style="font-size:0.875rem;color:var(--text-muted)">
+              I agree to the <a href="#" style="color:var(--indigo-mid);font-weight:600">Terms of Service</a>
+              and <a href="#" style="color:var(--indigo-mid);font-weight:600">Privacy Policy</a>
+            </span>
+          </label>
+          <span class="form-error" id="terms-error"></span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="auth-submit btn">
+          🚀 Create My Account
+        </button>
+
+        <!-- Divider -->
+        <div class="auth-divider">or sign up with</div>
+
+        <!-- Social -->
+        <div class="social-btns">
+          <button type="button" class="social-btn" onclick="showToast('Google signup coming soon!','info')">
+            <span>🌐</span> Google
+          </button>
+          <button type="button" class="social-btn" onclick="showToast('Facebook signup coming soon!','info')">
+            <span>📘</span> Facebook
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="properties.js"></script>
+<script src="main.js"></script>
+<script src="auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (getUser()) window.location.href = 'dashboard.html';
+});
+</script>
+</body>
+</html>

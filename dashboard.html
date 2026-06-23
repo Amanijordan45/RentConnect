@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | RentConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+
+<!-- Top Navbar (slim) -->
+<nav class="navbar scrolled" id="navbar" style="height:64px">
+  <div class="container navbar-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🏠</div>
+      <span class="logo-text" style="color:var(--text)">RentConnect</span>
+    </a>
+    <div class="nav-links">
+      <a href="properties.html" class="nav-link" style="color:var(--text-muted)">Browse Properties</a>
+    </div>
+    <div class="nav-cta">
+      <button class="theme-toggle" style="color:var(--text)">🌙</button>
+      <span class="nav-link" style="color:var(--text-muted);font-size:0.875rem" id="nav-user-name">Loading…</span>
+      <button class="btn btn-outline btn-sm" data-action="logout">Log Out</button>
+      <!-- Mobile menu toggle for sidebar -->
+      <button class="hamburger" id="hamburger" style="display:flex">
+        <span style="background:var(--text)"></span>
+        <span style="background:var(--text)"></span>
+        <span style="background:var(--text)"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="dashboard-layout">
+
+  <!-- ── Sidebar ── -->
+  <aside class="dash-sidebar" id="dash-sidebar">
+    <div class="dash-user">
+      <div class="dash-user-avatar dash-user-initial">U</div>
+      <div class="dash-user-name">Loading…</div>
+      <div class="dash-user-role">🔑 Renter</div>
+    </div>
+
+    <nav class="dash-nav">
+      <div class="dash-nav-section-label">Main</div>
+      <button class="dash-nav-item active" data-tab="tab-overview">
+        <span class="nav-icon">📊</span> Overview
+      </button>
+      <button class="dash-nav-item" data-tab="tab-properties">
+        <span class="nav-icon">🏠</span> My Properties
+      </button>
+      <button class="dash-nav-item" data-tab="tab-add">
+        <span class="nav-icon">➕</span> Add Property
+      </button>
+
+      <div class="dash-nav-section-label" style="margin-top:8px">Personal</div>
+      <button class="dash-nav-item" data-tab="tab-favorites">
+        <span class="nav-icon">❤️</span> Saved Properties
+      </button>
+      <button class="dash-nav-item" data-tab="tab-settings">
+        <span class="nav-icon">⚙️</span> Settings
+      </button>
+
+      <div class="dash-nav-section-label" style="margin-top:8px">Quick Links</div>
+      <a href="properties.html" class="dash-nav-item" style="text-decoration:none">
+        <span class="nav-icon">🔍</span> Browse Listings
+      </a>
+      <a href="contact.html" class="dash-nav-item" style="text-decoration:none">
+        <span class="nav-icon">💬</span> Support
+      </a>
+    </nav>
+
+    <div class="dash-sidebar-footer">
+      <button data-action="logout">
+        <span>🚪</span> Log Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;backdrop-filter:blur(2px)"
+    onclick="closeSidebar()"></div>
+
+  <!-- ── Main Content ── -->
+  <main class="dash-main" id="dash-main">
+
+    <div class="dash-header">
+      <div>
+        <div class="dash-title">Overview</div>
+        <div class="dash-subtitle">Your property performance at a glance</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="font-size:0.875rem;color:var(--text-muted)" id="dash-date"></span>
+        <button class="btn btn-primary btn-sm"
+          onclick="document.querySelector('.dash-nav-item[data-tab=tab-add]').click()">
+          ➕ Add Property
+        </button>
+      </div>
+    </div>
+
+    <!-- ══ TAB: Overview ══ -->
+    <div class="dash-tab active" id="tab-overview">
+      <!-- Stats -->
+      <div class="dash-stats-grid">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon indigo">🏠</div>
+          <div class="dash-stat-val" id="stat-total">0</div>
+          <div class="dash-stat-lbl">Total Properties</div>
+          <div class="dash-stat-change up">▲ Active portfolio</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon teal">✅</div>
+          <div class="dash-stat-val" id="stat-available">0</div>
+          <div class="dash-stat-lbl">Available Now</div>
+          <div class="dash-stat-change up">▲ Ready to rent</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon coral">🔒</div>
+          <div class="dash-stat-val" id="stat-rented">0</div>
+          <div class="dash-stat-lbl">Currently Rented</div>
+          <div class="dash-stat-change up">▲ Generating income</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon amber">💰</div>
+          <div class="dash-stat-val" id="stat-revenue" style="font-size:1.1rem">UGX 0</div>
+          <div class="dash-stat-lbl">Monthly Revenue</div>
+          <div class="dash-stat-change up">▲ From rented units</div>
+        </div>
+      </div>
+
+      <!-- Quick overview table -->
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <h3>Recent Properties</h3>
+          <button class="btn btn-outline btn-sm"
+            onclick="document.querySelector('.dash-nav-item[data-tab=tab-properties]').click()">
+            View All →
+          </button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Price / Month</th>
+                <th>Status</th>
+                <th>Listed</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="overview-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)">
+                <div class="loader" style="margin:0 auto 12px"></div>Loading…
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div style="margin-top:32px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+        <div class="dash-stat-card" style="padding:24px">
+          <h4 style="font-family:var(--font-display);margin-bottom:12px">💡 Landlord Tips</h4>
+          <ul style="display:flex;flex-direction:column;gap:8px;color:var(--text-muted);font-size:0.875rem">
+            <li>✓ Add high-quality photos to get 3× more enquiries</li>
+            <li>✓ Price competitively — check similar listings nearby</li>
+            <li>✓ Respond to enquiries within 24 hours</li>
+            <li>✓ Keep your listing updated with accurate availability</li>
+          </ul>
+        </div>
+        <div class="dash-stat-card" style="padding:24px">
+          <h4 style="font-family:var(--font-display);margin-bottom:12px">📈 Platform Stats</h4>
+          <ul style="display:flex;flex-direction:column;gap:8px;color:var(--text-muted);font-size:0.875rem">
+            <li>📍 1,240+ active listings across Uganda</li>
+            <li>👀 Average listing gets 47 views/week</li>
+            <li>⚡ 85% of properties rented within 30 days</li>
+            <li>⭐ 4.8/5 average landlord rating</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: My Properties ══ -->
+    <div class="dash-tab" id="tab-properties">
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <h3>My Properties</h3>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <div class="table-search">
+              <span class="icon">🔍</span>
+              <input type="text" id="table-search" placeholder="Search properties…">
+            </div>
+            <button class="btn btn-primary btn-sm"
+              onclick="document.querySelector('.dash-nav-item[data-tab=tab-add]').click()">
+              ➕ Add New
+            </button>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Price / Month</th>
+                <th>Status</th>
+                <th>Listed</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="props-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)">
+                <div class="loader" style="margin:0 auto 12px"></div>Loading…
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: Add Property ══ -->
+    <div class="dash-tab" id="tab-add">
+      <div class="add-prop-form">
+        <h3 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:24px" id="add-form-title">
+          ➕ Add New Property
+        </h3>
+        <form id="add-prop-form" novalidate>
+
+          <!-- Basic Info -->
+          <div class="form-section">
+            <div class="form-section-title">📋 Basic Information</div>
+            <div class="form-grid-2" style="margin-bottom:20px">
+              <div class="form-group">
+                <label class="form-label">Property Title *</label>
+                <input type="text" name="title" class="form-input" placeholder="e.g. Modern 2BR Apartment, Kololo" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Property Type *</label>
+                <select name="type" class="form-select" required>
+                  <option value="">Select type…</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="House">House</option>
+                  <option value="Studio">Studio</option>
+                  <option value="Villa">Villa</option>
+                  <option value="Penthouse">Penthouse</option>
+                  <option value="Office">Office / Commercial</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Location / Address *</label>
+                <input type="text" name="location" class="form-input" placeholder="e.g. Plot 12 Acacia Ave, Kololo" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">City</label>
+                <select name="city" class="form-select">
+                  <option value="Kampala">Kampala</option>
+                  <option value="Entebbe">Entebbe</option>
+                  <option value="Jinja">Jinja</option>
+                  <option value="Gulu">Gulu</option>
+                  <option value="Mbarara">Mbarara</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pricing & Details -->
+          <div class="form-section">
+            <div class="form-section-title">💰 Pricing & Details</div>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label class="form-label">Monthly Rent (UGX) *</label>
+                <input type="number" name="price" class="form-input" placeholder="e.g. 1500000" required min="0">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Bedrooms</label>
+                <select name="bedrooms" class="form-select">
+                  <option value="0">Studio (0)</option>
+                  <option value="1">1 Bedroom</option>
+                  <option value="2">2 Bedrooms</option>
+                  <option value="3">3 Bedrooms</option>
+                  <option value="4">4 Bedrooms</option>
+                  <option value="5">5+ Bedrooms</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Bathrooms</label>
+                <select name="bathrooms" class="form-select">
+                  <option value="1">1 Bathroom</option>
+                  <option value="2">2 Bathrooms</option>
+                  <option value="3">3 Bathrooms</option>
+                  <option value="4">4 Bathrooms</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-grid-2" style="margin-top:20px">
+              <div class="form-group">
+                <label class="form-label">Floor Area (m²)</label>
+                <input type="number" name="area" class="form-input" placeholder="e.g. 85">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Availability</label>
+                <select name="available" class="form-select">
+                  <option value="true">Available Now</option>
+                  <option value="false">Currently Rented</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-section">
+            <div class="form-section-title">📝 Description</div>
+            <div class="form-group">
+              <label class="form-label">Property Description *</label>
+              <textarea name="description" class="form-textarea" rows="5"
+                placeholder="Describe the property — location, features, surroundings, access to amenities…" required
+                style="resize:vertical"></textarea>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div class="form-section">
+            <div class="form-section-title">✨ Amenities</div>
+            <div class="amenities-select">
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="WiFi"> 📶 WiFi</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Security"> 🔒 Security</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Parking"> 🚗 Parking</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Water"> 💧 Water</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Generator"> ⚡ Generator</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Pool"> 🏊 Pool</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Gym"> 🏋️ Gym</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Garden"> 🌿 Garden</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="DSTV"> 📺 DSTV</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Balcony"> 🌇 Balcony</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Solar Power"> ☀️ Solar Power</label>
+              <label class="amenity-checkbox"><input type="checkbox" name="amenities" value="Servant Quarters"> 🏘️ Servant Quarters</label>
+            </div>
+          </div>
+
+          <!-- Image URL -->
+          <div class="form-section">
+            <div class="form-section-title">📸 Property Photo</div>
+            <div class="form-group">
+              <label class="form-label">Main Image URL</label>
+              <input type="url" name="image1" class="form-input"
+                placeholder="https://images.unsplash.com/… (paste a direct image URL)">
+              <span class="form-hint">Use an Unsplash URL or any direct .jpg/.png link</span>
+            </div>
+          </div>
+
+          <!-- Form actions -->
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <button type="submit" class="btn btn-primary btn-lg" id="add-form-submit">
+              🏠 List Property
+            </button>
+            <button type="button" class="btn btn-outline btn-lg" id="cancel-edit" style="display:none">
+              ✕ Cancel Edit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ══ TAB: Favorites ══ -->
+    <div class="dash-tab" id="tab-favorites">
+      <div class="grid-3 stagger-group" id="favs-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted)">
+          <div style="font-size:3rem;margin-bottom:16px">❤️</div>
+          <p>Loading saved properties…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: Settings ══ -->
+    <div class="dash-tab" id="tab-settings">
+      <div class="add-prop-form" style="max-width:640px">
+        <h3 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:24px">⚙️ Account Settings</h3>
+        <form id="settings-form" novalidate>
+          <div class="form-section">
+            <div class="form-section-title">👤 Profile Information</div>
+            <div class="form-grid-2" style="margin-bottom:20px">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="s-name" class="form-input" placeholder="Your full name">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" id="s-email" class="form-input" placeholder="you@example.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" id="s-phone" class="form-input" placeholder="+256 700 000 000">
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">🔒 Change Password</div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-input" placeholder="New password">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-input" placeholder="Repeat new password">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">🔔 Notifications</div>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <label class="remember-me">
+                <input type="checkbox" checked> Email me new property matches
+              </label>
+              <label class="remember-me">
+                <input type="checkbox" checked> Notify me about new enquiries
+              </label>
+              <label class="remember-me">
+                <input type="checkbox"> Weekly market updates
+              </label>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:16px;align-items:center">
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+            <button type="button" class="btn btn-outline" style="color:var(--coral);border-color:var(--coral)"
+              onclick="if(confirm('Are you sure you want to delete your account?')) { logout(); }">
+              🗑️ Delete Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="properties.js"></script>
+<script src="main.js"></script>
+<script src="auth.js"></script>
+<script src="dashboard.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Set date
+  const d = document.getElementById('dash-date');
+  if (d) d.textContent = new Date().toLocaleDateString('en-UG', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  // Nav username
+  const u = getUser();
+  const navName = document.getElementById('nav-user-name');
+  if (u && navName) navName.textContent = u.name;
+
+  // Mobile sidebar toggle via hamburger
+  const ham = document.getElementById('hamburger');
+  const sidebar = document.getElementById('dash-sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (ham) {
+    ham.addEventListener('click', () => {
+      const open = sidebar.classList.toggle('mobile-open');
+      overlay.style.display = open ? 'block' : 'none';
+    });
+  }
+
+  // Mirror overview table to props-tbody
+  setTimeout(() => {
+    const overviewBody = document.getElementById('overview-tbody');
+    if (overviewBody && dashProps) {
+      const slice = dashProps.slice(0, 5);
+      overviewBody.innerHTML = slice.map(p => `
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:12px">
+              <img src="${p.images[0]}" alt="" class="table-prop-thumb">
+              <div>
+                <div class="table-prop-name">${p.title}</div>
+                <div class="table-prop-loc">📍 ${p.location}</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="badge badge-indigo">${p.type}</span></td>
+          <td style="font-weight:700;color:var(--indigo-mid)">UGX ${p.price.toLocaleString()}</td>
+          <td><span class="status-pill ${p.available ? 'available' : 'rented'}">${p.available ? 'Available' : 'Rented'}</span></td>
+          <td style="font-size:0.8rem;color:var(--text-muted)">${new Date(p.dateAdded).toLocaleDateString('en-UG')}</td>
+          <td><div class="table-actions">
+            <button class="action-btn edit" onclick="editProperty(${p.id})">✏️</button>
+            <button class="action-btn delete" onclick="deleteProperty(${p.id})">🗑️</button>
+          </div></td>
+        </tr>
+      `).join('');
+    }
+  }, 300);
+});
+
+function closeSidebar() {
+  document.getElementById('dash-sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').style.display = 'none';
+}
+</script>
+</body>
+</html>

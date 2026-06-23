@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="List your rental property on RentConnect and reach thousands of verified renters across Uganda.">
+  <title>For Landlords | RentConnect</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="animations.css">
+  <style>
+    /* ── Landlord Hero ── */
+    .lhero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0B1437 0%, #1D1060 55%, #2D1B69 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+    .lhero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    .lhero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.22;
+      pointer-events: none;
+    }
+    .lhero-blob-1 { width:600px; height:600px; background:var(--indigo); top:-200px; right:-150px; }
+    .lhero-blob-2 { width:350px; height:350px; background:var(--coral); bottom:-80px; left:-80px; }
+
+    .lhero-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+      padding: 80px 0;
+    }
+    .lhero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 24px;
+    }
+    .lhero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .lhero-title .hl {
+      background: linear-gradient(135deg, #A78BFA, #F97066);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .lhero-sub {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: 36px;
+    }
+    .lhero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .lhero-kpis {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+    .lhero-kpi { color: white; }
+    .lhero-kpi-val {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .lhero-kpi-lbl {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    /* Hero floating cards */
+    .lhero-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .lhero-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 18px 22px;
+      color: white;
+    }
+    .lhero-card:nth-child(1) { animation: cardFloat 4s ease-in-out infinite; }
+    .lhero-card:nth-child(2) { animation: cardFloat 4s ease-in-out infinite 1.4s; }
+    .lhero-card:nth-child(3) { animation: cardFloat 4s ease-in-out infinite 2.8s; }
+    .lhero-card-label { font-size: 0.72rem; opacity: 0.6; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .lhero-card-val   { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; }
+    .lhero-card-sub   { font-size: 0.8rem; opacity: 0.65; margin-top: 4px; }
+    .lhero-card-dot   { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; }
+
+    /* ── Benefits grid ── */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .benefit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+    }
+    .benefit-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--indigo-light);
+    }
+    .benefit-icon {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+    }
+    .benefit-card h4 { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 10px; }
+    .benefit-card p  { color: var(--text-muted); font-size: 0.875rem; line-height: 1.7; }
+
+    /* ── Process steps ── */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5%);
+      right: calc(12.5%);
+      height: 2px;
+      background: linear-gradient(90deg, var(--indigo-mid), var(--coral));
+    }
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-circle {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--indigo-mid), var(--coral));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(91,33,182,0.35);
+    }
+    .step-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .step-desc  { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── Pricing ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+    .pricing-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 40px 32px;
+      text-align: center;
+      transition: all var(--transition-slow);
+      position: relative;
+    }
+    .pricing-card.featured {
+      border-color: var(--indigo-mid);
+      box-shadow: var(--shadow-indigo);
+      transform: scale(1.04);
+    }
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--indigo-mid);
+      color: white;
+      padding: 4px 20px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .pricing-card:not(.featured):hover {
+      border-color: var(--indigo-mid);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+    }
+    .pricing-tier-icon  { font-size: 2rem; margin-bottom: 10px; }
+    .pricing-tier-name  { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+    .pricing-tier-desc  { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
+    .pricing-amount     { font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; }
+    .pricing-period     { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 24px; }
+    .pricing-features   { list-style: none; text-align: left; margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; }
+    .pricing-features li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.875rem; color: var(--text-muted); }
+    .pricing-features li .chk  { color: var(--teal); font-weight: 700; flex-shrink: 0; }
+    .pricing-features li .nope { color: var(--border); font-weight: 700; flex-shrink: 0; }
+
+    /* ── Testimonials slim ── */
+    .landlord-testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .landlord-testi {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+    .landlord-testi:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .landlord-testi-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
+    .landlord-testi-author { display: flex; align-items: center; gap: 12px; }
+    .landlord-testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--indigo-mid), var(--coral));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-family: var(--font-display); font-weight: 700;
+      flex-shrink: 0;
+    }
+    .landlord-testi-name { font-weight: 700; font-size: 0.88rem; }
+    .landlord-testi-role { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 0; cursor: pointer;
+      font-weight: 600; font-size: 0.95rem; gap: 16px;
+    }
+    .faq-icon { transition: transform 0.3s ease; color: var(--text-muted); flex-shrink: 0; }
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+    .faq-answer { overflow: hidden; max-height: 0; transition: max-height 0.35s ease, padding 0.35s ease; }
+    .faq-item.open .faq-answer { max-height: 160px; padding-bottom: 18px; }
+    .faq-answer p { color: var(--text-muted); line-height: 1.75; font-size: 0.88rem; }
+
+    /* ── Stat band ── */
+    .stat-band {
+      background: linear-gradient(135deg, var(--navy), var(--indigo));
+      padding: 64px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .stat-band-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+      text-align: center;
+    }
+    .stat-band-num {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-band-lbl { font-size: 0.875rem; color: rgba(255,255,255,0.6); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .lhero-inner      { grid-template-columns: 1fr; gap: 40px; }
+      .lhero-cards      { flex-direction: row; flex-wrap: wrap; }
+      .lhero-card       { flex: 1 1 180px; }
+      .benefits-grid    { grid-template-columns: repeat(2, 1fr); }
+      .process-steps    { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .process-steps::before { display: none; }
+      .pricing-grid     { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .pricing-card.featured { transform: none; }
+      .landlord-testi-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+      .stat-band-grid   { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .lhero            { min-height: auto; padding: calc(var(--nav-h) + 32px) 0 48px; }
+      .lhero-title      { font-size: 2rem; }
+      .lhero-btns       { flex-direction: column; }
+      .lhero-btns .btn  { width: 100%; justify-content: center; }
+      .lhero-kpis       { gap: 20px; }
+      .lhero-cards      { display: none; }
+      .benefits-grid    { grid-template-columns: 1fr; }
+      .process-steps    { grid-template-columns: 1fr; }
+      .stat-band-grid   { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .lhero-kpis       { flex-direction: column; gap: 16px; }
+      .stat-band-grid   { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-logo">🏠 RentConnect</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<!-- ── Navbar ── -->
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🏠</div>
+      <span class="logo-text">RentConnect</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="properties.html" class="nav-link">Properties</a>
+      <a href="landlords.html" class="nav-link active">Landlords</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+      <a href="login.html" class="nav-link">Login</a>
+      <a href="register.html" class="btn btn-coral btn-sm">List Free</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="properties.html" class="nav-link">Properties</a>
+  <a href="landlords.html" class="nav-link active">Landlords</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <div class="mobile-nav-cta">
+    <a href="login.html" class="btn btn-outline">Login</a>
+    <a href="register.html" class="btn btn-coral">List Property Free</a>
+  </div>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="lhero">
+  <div class="lhero-blob lhero-blob-1"></div>
+  <div class="lhero-blob lhero-blob-2"></div>
+
+  <div class="container">
+    <div class="lhero-inner">
+
+      <!-- Left: copy -->
+      <div>
+        <div class="lhero-tag hero-animate-1">
+          🏠 For Landlords &amp; Property Owners
+        </div>
+        <h1 class="lhero-title hero-animate-2">
+          Rent Faster.<br>
+          Earn <span class="hl">Smarter.</span><br>
+          Stress Less.
+        </h1>
+        <p class="lhero-sub hero-animate-3">
+          List your property in under 5 minutes and reach thousands of verified renters actively searching across Uganda — completely free to start.
+        </p>
+        <div class="lhero-btns hero-animate-4">
+          <a href="register.html" class="btn btn-coral btn-lg">🚀 List My Property Free</a>
+          <a href="#how-it-works" class="btn btn-ghost btn-lg">See How It Works</a>
+        </div>
+        <div class="lhero-kpis hero-animate-5">
+          <div class="lhero-kpi">
+            <div class="lhero-kpi-val">85%</div>
+            <div class="lhero-kpi-lbl">Rented within 30 days</div>
+          </div>
+          <div class="lhero-kpi">
+            <div class="lhero-kpi-val">5,600+</div>
+            <div class="lhero-kpi-lbl">Active renters searching</div>
+          </div>
+          <div class="lhero-kpi">
+            <div class="lhero-kpi-val">Free</div>
+            <div class="lhero-kpi-lbl">First 3 listings</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: floating info cards -->
+      <div class="lhero-cards">
+        <div class="lhero-card">
+          <div class="lhero-card-label">📩 New Enquiry</div>
+          <div class="lhero-card-val">Viewing Request Received</div>
+          <div class="lhero-card-sub">2 Bed Apartment · Kololo — 2 mins ago</div>
+        </div>
+        <div class="lhero-card">
+          <div class="lhero-card-label">📊 This Week</div>
+          <div class="lhero-card-val">47 Listing Views</div>
+          <div class="lhero-card-sub" style="color:var(--teal)">▲ 23% increase from last week</div>
+        </div>
+        <div class="lhero-card">
+          <div class="lhero-card-label">💰 Monthly Income</div>
+          <div class="lhero-card-val">UGX 5,400,000</div>
+          <div class="lhero-card-sub">
+            <span class="lhero-card-dot" style="background:var(--teal)"></span>3 properties rented
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STAT BAND ═══════════════ -->
+<div class="stat-band">
+  <div class="container">
+    <div class="stat-band-grid">
+      <div class="reveal">
+        <div class="stat-band-num counter" data-counter="380" data-suffix="+">0</div>
+        <div class="stat-band-lbl">Verified Landlords</div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="stat-band-num counter" data-counter="1240" data-suffix="+">0</div>
+        <div class="stat-band-lbl">Active Listings</div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="stat-band-num">85%</div>
+        <div class="stat-band-lbl">Rented in 30 Days</div>
+      </div>
+      <div class="reveal reveal-delay-3">
+        <div class="stat-band-num counter" data-counter="12">0</div>
+        <div class="stat-band-lbl">Cities Covered</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ BENEFITS ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Why Landlords Choose Us</span>
+      <h2 class="display-md">Everything You Need to Rent Successfully</h2>
+      <p>A complete toolkit built specifically for Ugandan landlords and property owners.</p>
+    </div>
+    <div class="benefits-grid stagger-group">
+
+      <div class="benefit-card reveal">
+        <div class="benefit-icon" style="background:rgba(91,33,182,0.1)">🎯</div>
+        <h4>Targeted Reach</h4>
+        <p>Your listing reaches thousands of pre-qualified renters filtered by location, budget, and property type — people genuinely looking for what you offer.</p>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-1">
+        <div class="benefit-icon" style="background:rgba(249,112,102,0.1)">📊</div>
+        <h4>Powerful Dashboard</h4>
+        <p>Manage all listings, track views and enquiries, update availability, and respond to renters from one clean, intuitive interface on any device.</p>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-2">
+        <div class="benefit-icon" style="background:rgba(20,184,166,0.1)">✅</div>
+        <h4>Verified Renters Only</h4>
+        <p>Every enquiry comes from a registered, verified renter. Say goodbye to time-wasters and focus only on serious, qualified prospects.</p>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-3">
+        <div class="benefit-icon" style="background:rgba(245,158,11,0.1)">📸</div>
+        <h4>Beautiful Listings</h4>
+        <p>Showcase your property with multiple high-resolution photos, a rich amenity list, and a detailed description that attracts quality tenants fast.</p>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-4">
+        <div class="benefit-icon" style="background:rgba(91,33,182,0.1)">🔔</div>
+        <h4>Instant Notifications</h4>
+        <p>Get notified the moment a renter enquires about your property. Respond immediately via SMS, email, or the dashboard — never miss a lead.</p>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-4">
+        <div class="benefit-icon" style="background:rgba(20,184,166,0.1)">🔒</div>
+        <h4>Secure & Private</h4>
+        <p>Your personal contact details are only shared with renters after you confirm their enquiry. Your privacy is fully protected at all times.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="section" style="background:var(--card-bg)" id="how-it-works">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Simple 4-Step Process</span>
+      <h2 class="display-md">List in Minutes, Rent in Days</h2>
+      <p>We've made listing your property as simple and fast as possible.</p>
+    </div>
+    <div class="process-steps stagger-group">
+      <div class="process-step reveal">
+        <div class="step-circle">1</div>
+        <div class="step-title">Create Account</div>
+        <div class="step-desc">Sign up as a landlord in under 2 minutes. Complete our simple ID verification to earn a trusted badge.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-circle">2</div>
+        <div class="step-title">Add Your Property</div>
+        <div class="step-desc">Fill in your listing details — title, location, price, photos, and amenities. Your listing goes live within 24 hours.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-circle">3</div>
+        <div class="step-title">Receive Enquiries</div>
+        <div class="step-desc">Verified renters discover your listing and send viewing requests directly to you. You're notified instantly.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-circle">4</div>
+        <div class="step-title">Close the Deal</div>
+        <div class="step-desc">Meet your tenant, agree terms, sign the lease, and collect your first month's rent. Update your status on the dashboard.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Real Landlord Stories</span>
+      <h2 class="display-md">What Our Landlords Say</h2>
+      <p>Hear from property owners across Uganda who rent faster with RentConnect.</p>
+    </div>
+    <div class="landlord-testi-grid stagger-group">
+
+      <div class="landlord-testi reveal">
+        <div class="stars" style="margin-bottom:14px">⭐⭐⭐⭐⭐</div>
+        <p class="landlord-testi-text">"I listed my three properties and had tenants for all of them within 5 days. The dashboard is incredibly easy to use and the enquiries were from genuine, serious renters."</p>
+        <div class="landlord-testi-author">
+          <div class="landlord-testi-avatar">ON</div>
+          <div>
+            <div class="landlord-testi-name">Olivia Namukasa</div>
+            <div class="landlord-testi-role">Landlord · Ntinda — 3 properties</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="landlord-testi reveal reveal-delay-1">
+        <div class="stars" style="margin-bottom:14px">⭐⭐⭐⭐⭐</div>
+        <p class="landlord-testi-text">"Before RentConnect I spent months finding tenants through word of mouth. Now I get verified enquiries the same day I list. It has completely changed how I manage my portfolio."</p>
+        <div class="landlord-testi-author">
+          <div class="landlord-testi-avatar">DM</div>
+          <div>
+            <div class="landlord-testi-name">David Musoke</div>
+            <div class="landlord-testi-role">Landlord · Bugolobi — 6 properties</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="landlord-testi reveal reveal-delay-2">
+        <div class="stars" style="margin-bottom:14px">⭐⭐⭐⭐⭐</div>
+        <p class="landlord-testi-text">"The pricing is fair and the free plan was enough to get started. I upgraded to Professional after my first tenant moved in. The ROI is incredible — I'd recommend it to every landlord in Uganda."</p>
+        <div class="landlord-testi-author">
+          <div class="landlord-testi-avatar">CB</div>
+          <div>
+            <div class="landlord-testi-name">Christine Bukenya</div>
+            <div class="landlord-testi-role">Landlord · Munyonyo — 2 properties</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PRICING ═══════════════ -->
+<section class="section" style="background:var(--card-bg)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Simple, Honest Pricing</span>
+      <h2 class="display-md">Start Free. Grow When You're Ready.</h2>
+      <p>No hidden fees. No long-term contracts. Upgrade or cancel anytime.</p>
+    </div>
+    <div class="pricing-grid stagger-group">
+
+      <!-- Starter -->
+      <div class="pricing-card reveal">
+        <div class="pricing-tier-icon">🌱</div>
+        <div class="pricing-tier-name">Starter</div>
+        <div class="pricing-tier-desc">Perfect for new landlords</div>
+        <div class="pricing-amount">Free</div>
+        <div class="pricing-period">Forever · No credit card needed</div>
+        <ul class="pricing-features">
+          <li><span class="chk">✓</span> Up to 3 active listings</li>
+          <li><span class="chk">✓</span> Full property details &amp; photos</li>
+          <li><span class="chk">✓</span> Email enquiry notifications</li>
+          <li><span class="chk">✓</span> Dashboard &amp; availability control</li>
+          <li><span class="nope">✕</span> Featured placement in search</li>
+          <li><span class="nope">✕</span> SMS notifications</li>
+          <li><span class="nope">✕</span> Analytics &amp; insights</li>
+          <li><span class="nope">✕</span> Priority support</li>
+        </ul>
+        <a href="register.html" class="btn btn-outline" style="width:100%;justify-content:center">Get Started Free</a>
+      </div>
+
+      <!-- Professional (featured) -->
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-tier-icon">🚀</div>
+        <div class="pricing-tier-name">Professional</div>
+        <div class="pricing-tier-desc">For active landlords</div>
+        <div class="pricing-amount">UGX 50,000</div>
+        <div class="pricing-period">per month · Cancel anytime</div>
+        <ul class="pricing-features">
+          <li><span class="chk">✓</span> Unlimited active listings</li>
+          <li><span class="chk">✓</span> Full property details &amp; photos</li>
+          <li><span class="chk">✓</span> Email + SMS notifications</li>
+          <li><span class="chk">✓</span> Dashboard &amp; availability control</li>
+          <li><span class="chk">✓</span> Featured placement in search</li>
+          <li><span class="chk">✓</span> Analytics &amp; view insights</li>
+          <li><span class="chk">✓</span> Verified landlord badge</li>
+          <li><span class="chk">✓</span> Priority support</li>
+        </ul>
+        <a href="register.html" class="btn btn-primary" style="width:100%;justify-content:center">Start 14-Day Free Trial</a>
+      </div>
+
+      <!-- Agency -->
+      <div class="pricing-card reveal reveal-delay-2">
+        <div class="pricing-tier-icon">🏢</div>
+        <div class="pricing-tier-name">Agency</div>
+        <div class="pricing-tier-desc">For property agencies</div>
+        <div class="pricing-amount">UGX 150,000</div>
+        <div class="pricing-period">per month · Billed monthly</div>
+        <ul class="pricing-features">
+          <li><span class="chk">✓</span> Everything in Professional</li>
+          <li><span class="chk">✓</span> Multiple agent sub-accounts</li>
+          <li><span class="chk">✓</span> Branded agency profile page</li>
+          <li><span class="chk">✓</span> Bulk CSV listing import</li>
+          <li><span class="chk">✓</span> API access</li>
+          <li><span class="chk">✓</span> Dedicated account manager</li>
+          <li><span class="chk">✓</span> Custom reporting</li>
+          <li><span class="chk">✓</span> 24/7 phone support</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="width:100%;justify-content:center">Contact Sales Team</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Landlord FAQ</span>
+      <h2 class="display-md">Common Questions</h2>
+      <p>Everything landlords ask before signing up.</p>
+    </div>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          How do I list my property on RentConnect?
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer"><p>Create a landlord account, complete your quick verification, then click "Add Property" in your dashboard. Fill in the details, upload photos, and your listing goes live within 24 hours after our team reviews it.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Is it really free to list my property?
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer"><p>Yes. Your first 3 listings are always completely free with no time limit. We don't charge commission on successful rentals either. Paid plans unlock unlimited listings and additional features like featured placement and analytics.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          How are renters verified?
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer"><p>All renters must register with a valid email and phone number. We verify phone numbers via OTP. Renters with suspicious behaviour are flagged and removed. You can also rate and review renters after a successful rental.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Can I edit or remove my listing anytime?
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer"><p>Absolutely. From your dashboard you can edit listing details, change the price, update photos, toggle availability between "Available" and "Rented", or permanently delete a listing — all in seconds.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          How quickly will I get enquiries?
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer"><p>Most listings receive their first enquiry within 48 hours of going live. Properties with high-quality photos and competitive pricing typically receive enquiries within the first few hours. 85% of our listings are rented within 30 days.</p></div>
+      </div>
+
+      <div class="faq-item" style="border-bottom:none">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Do you cover areas outside Kampala?
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer"><p>Yes! We cover 12 cities including Kampala, Entebbe, Jinja, Gulu, Mbarara, Mbale, Fort Portal, Masaka, Lira, Soroti, Kabale, and Arua — with more cities launching every quarter.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FINAL CTA ═══════════════ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-section reveal" style="margin:0">
+      <h2 class="display-md">Ready to List Your Property?</h2>
+      <p>Join 380+ verified landlords already earning on RentConnect. First 3 listings are completely free — no credit card required.</p>
+      <div class="cta-btns">
+        <a href="register.html" class="btn btn-coral btn-xl">🏠 List My Property Free</a>
+        <a href="contact.html" class="btn btn-ghost btn-xl">💬 Talk to Our Team</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+<div id="toast-container"></div>
+
+<script src="properties.js"></script>
+<script src="main.js"></script>
+<script src="animations.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('footer-placeholder').innerHTML = buildFooter();
+  });
+
+  function toggleFaq(questionEl) {
+    const item = questionEl.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
